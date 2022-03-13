@@ -57,11 +57,7 @@ class Api {
       if (xml != null && xml.isNotEmpty) {
         if (xml.contains(RESPONSE)) {
           if (xml.contains(STATUS)) {
-            if (xml.betweenXml(STATUS) == 'ok') {
-              return xml;
-            } else {
-              throw PayboxError.fromXml(xml);
-            }
+             return xml;
           } else {
             errorDescription = 'Response not contains status';
           }
