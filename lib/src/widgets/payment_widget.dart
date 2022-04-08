@@ -43,6 +43,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   Widget build(BuildContext context) {
     widget.controller?.targetContext = context;
     return WebView(
+      zoomEnabled: false,
       initialUrl: getUrl(),
       javascriptMode: JavascriptMode.unrestricted,
       navigationDelegate: onNavigationDelegate,

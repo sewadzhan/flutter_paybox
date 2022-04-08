@@ -97,7 +97,17 @@ class Configuration {
     return params;
   }
 
+  Map<String, dynamic> getParamsForPayCard({
+    Map<String, dynamic>? extraParams = const {},
+  }) {
+    Map<String, dynamic> params = {};
+    if (extraParams != null && extraParams.isNotEmpty) {
+      params.addAll(extraParams);
+    }
 
+    params[MERCHANT_ID] = this.merchantId;
+    return params;
+  }
 }
 
 void notNullNotEmpty(String? value, Function() function) {
