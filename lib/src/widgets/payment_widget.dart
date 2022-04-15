@@ -46,7 +46,14 @@ class _PaymentWidgetState extends State<PaymentWidget> {
       zoomEnabled: false,
       initialUrl: getUrl(),
       javascriptMode: JavascriptMode.unrestricted,
-      navigationDelegate: onNavigationDelegate,
+      //navigationDelegate: onNavigationDelegate,
+      onPageFinished: (String url) {
+        if (url.contains('success')) {
+          paymentDone(true);
+        } else if (url.contains('failure')) {
+          paymentDone(false);
+        }
+      },
       onWebViewCreated: (controller) => _webViewController = controller,
     );
   }
