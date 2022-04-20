@@ -72,7 +72,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     strokeWidth: 2.5,
                   )),
             )
-          : Stack(),
+          : Container(),
     ]);
   }
 
