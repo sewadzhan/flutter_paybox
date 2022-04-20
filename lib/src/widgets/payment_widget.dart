@@ -32,6 +32,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
 
   bool isPaymentDone = false;
   String? _pageUrl;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -42,20 +43,36 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   @override
   Widget build(BuildContext context) {
     widget.controller?.targetContext = context;
-    return WebView(
-      zoomEnabled: false,
-      initialUrl: getUrl(),
-      javascriptMode: JavascriptMode.unrestricted,
-      //navigationDelegate: onNavigationDelegate,
-      onPageFinished: (String url) {
-        if (url.contains('success')) {
-          paymentDone(true);
-        } else if (url.contains('failure')) {
-          paymentDone(false);
-        }
-      },
-      onWebViewCreated: (controller) => _webViewController = controller,
-    );
+    return Stack(children: [
+      WebView(
+        zoomEnabled: false,
+        initialUrl: getUrl(),
+        javascriptMode: JavascriptMode.unrestricted,
+        //navigationDelegate: onNavigationDelegate,
+        onPageFinished: (String url) {
+          setState(() {
+            isLoading = false;
+          });
+          if (url.contains('success')) {
+            paymentDone(true);
+          } else if (url.contains('failure')) {
+            paymentDone(false);
+          }
+        },
+        onWebViewCreated: (controller) => _webViewController = controller,
+      ),
+      isLoading
+          ? Center(
+              child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CircularProgressIndicator(
+                    color: Color(0xFFEB573F),
+                    strokeWidth: 2.5,
+                  )),
+            )
+          : Stack(),
+    ]);
   }
 
   void setUrl(String? url) {
